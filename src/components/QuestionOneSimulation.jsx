@@ -25,9 +25,9 @@ export default function QuestionOneSimulation() {
       a_windowStart: 2,
       a_ackedIndex: 1,
       a_sentIndex: 2,
-      b_windowStart: 3,
-      b_receivedIndex: 2,
-      explanation: "A receives an ACK for frames 0 and 1 (meaning B expects 2). A's window slides to start at 2. Frame 2 is still unacknowledged from A's perspective. B received frames 0, 1, and 2, so its window slides to expect frame 3."
+      b_windowStart: 2,
+      b_receivedIndex: 1,
+      explanation: "A sends frames 0, 1, 2 and receives ACKs for 0 and 1. A's window slides to [2,3,4,5]. B has ACKed frames 0 and 1 (cumulative ACK 2), so B's window also slides to [2,3,4,5]."
     },
     {
       id: 'c',
@@ -36,9 +36,9 @@ export default function QuestionOneSimulation() {
       a_windowStart: 5,
       a_ackedIndex: 4,
       a_sentIndex: 5,
-      b_windowStart: 6,
-      b_receivedIndex: 5,
-      explanation: "A receives an ACK for up to frame 4 (meaning B expects 5). A's window slides to start at 5. Frame 5 is unacknowledged from A's perspective. Assuming B receives all frames A sends (including 5), B's window slides to expect frame 6."
+      b_windowStart: 5,
+      b_receivedIndex: 4,
+      explanation: "A sends frames 3, 4, 5 and receives ACK 4 (meaning B has ACKed up to frame 4). A's window slides to [5,6,7,0]. B has ACKed frames up to 4, so B's window also slides to [5,6,7,0]."
     }
   ];
 

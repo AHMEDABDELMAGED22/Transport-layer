@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { PenTool, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import QuestionOneSimulation from './QuestionOneSimulation';
+import QuestionTwoSimulation from './QuestionTwoSimulation';
 
 const ProblemCard = ({ title, page, children }) => {
   const [open, setOpen] = useState(false);
@@ -40,8 +42,6 @@ export default function ProblemWorkspace({ id, setActiveSection }) {
     return () => observer.disconnect();
   }, [id, setActiveSection]);
 
-  const [p1State, setP1State] = useState(0);
-
   return (
     <section id={id} ref={sectionRef} className="section-container">
       <h1 className="glow-text" style={{ textAlign: 'center', marginBottom: '1rem' }}>Interactive Problem Workspace</h1>
@@ -53,37 +53,12 @@ export default function ProblemWorkspace({ id, setActiveSection }) {
         
         <ProblemCard title="Problem 1: Sliding Window Events" page="23">
           <p>Assuming A is transmitting and B is receiving, show the window positions at A and B (Window size 4, 3-bit sequence 0-7) for the following events:</p>
-          
-          <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', marginTop: '1rem' }}>
-            <button className={p1State === 0 ? "btn-primary" : "btn-secondary"} onClick={() => setP1State(0)}>a) Before sending</button>
-            <button className={p1State === 1 ? "btn-primary" : "btn-secondary"} onClick={() => setP1State(1)}>b) Send 0,1,2 & ACK 0,1</button>
-            <button className={p1State === 2 ? "btn-primary" : "btn-secondary"} onClick={() => setP1State(2)}>c) Send 3,4,5 & ACK 4</button>
-          </div>
+          <QuestionOneSimulation />
+        </ProblemCard>
 
-          <div style={{ background: 'var(--bg-color-secondary)', padding: '1.5rem', borderRadius: '8px', fontFamily: 'var(--font-mono)' }}>
-            {p1State === 0 && (
-               <div>
-                 <div style={{ color: 'var(--color-cyan)' }}>Station A Window: [0, 1, 2, 3]</div>
-                 <div style={{ color: 'var(--color-purple)' }}>Station B Window: [0, 1, 2, 3]</div>
-               </div>
-            )}
-            {p1State === 1 && (
-               <div>
-                 <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>A receives RR 2 (ACK 0,1). Window slides by 2.</p>
-                 <div style={{ color: 'var(--color-cyan)' }}>Station A Window: [2, 3, 4, 5]</div>
-                 <div style={{ color: 'var(--color-purple)' }}>Station B Window: [3, 4, 5, 6] (assuming RR3 sent by B but A only got RR2, wait... if B acks 0,1 it means it expects 2, so RR2. B's window is now [2,3,4,5])</div>
-                 <br/>
-                 <span style={{ color: 'var(--color-green)' }}>Correct Answer:</span> A=[2,3,4,5], B=[3,4,5,6] (Because B received 0,1,2. B expects 3. So B sends RR3. A receives ACK for 0,1 so it received RR2. Thus A's window is [2,3,4,5])
-               </div>
-            )}
-            {p1State === 2 && (
-               <div>
-                 <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>A sends 3,4,5. B acks 4. B received 3,4. B expects 5. B sends RR5. A receives RR5.</p>
-                 <div style={{ color: 'var(--color-cyan)' }}>Station A Window: [5, 6, 7, 0]</div>
-                 <div style={{ color: 'var(--color-purple)' }}>Station B Window: [6, 7, 0, 1]</div>
-               </div>
-            )}
-          </div>
+        <ProblemCard title="Problem 2: Timing & File Transfer" page="Unknown">
+          <p>An application on station A was activated to send a 12 KB file to station B...</p>
+          <QuestionTwoSimulation />
         </ProblemCard>
 
         <ProblemCard title="Problem 4: Show that 3-bit sequence is needed for W=4" page="39">

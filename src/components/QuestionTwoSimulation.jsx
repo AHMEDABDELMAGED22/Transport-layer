@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Clock, AlertTriangle, CheckCircle, FileText } from 'lucide-react';
+import { Clock, AlertTriangle, CheckCircle, FileText, PlayCircle } from 'lucide-react';
+import NetworkAnimationSimulator from './NetworkAnimationSimulator';
 
 export default function QuestionTwoSimulation() {
   const [activeTab, setActiveTab] = useState('a');
@@ -72,6 +73,12 @@ export default function QuestionTwoSimulation() {
           onClick={() => setActiveTab('c')}
         >
           c) Busy Period (Timeout)
+        </button>
+        <button 
+          style={{ padding: '0.75rem 2rem', background: activeTab === 'd' ? 'var(--bg-color-tertiary)' : 'transparent', color: activeTab === 'd' ? '#00f3ff' : 'var(--text-secondary)', border: 'none', borderBottom: activeTab === 'd' ? '2px solid #00f3ff' : 'none', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+          onClick={() => setActiveTab('d')}
+        >
+          <PlayCircle size={18} /> d) Interactive Animation
         </button>
       </div>
 
@@ -188,6 +195,18 @@ export default function QuestionTwoSimulation() {
                 <strong>Final Answer:</strong> The new complete transfer time is 82 + 24 = <strong>106 µs</strong>.
               </div>
             </div>
+          </div>
+        )}
+
+        {activeTab === 'd' && (
+          <div style={{ animation: 'fadeIn 0.4s' }}>
+             <h3 style={{ color: '#00f3ff', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <PlayCircle color="#00f3ff" /> 3B1B Style Timing Animation
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+              Experience the math visually. Control the playback speed or drag the slider to scrub through the exact sequence of events, especially the crucial cycle calculation at 22µs!
+            </p>
+            <NetworkAnimationSimulator />
           </div>
         )}
         

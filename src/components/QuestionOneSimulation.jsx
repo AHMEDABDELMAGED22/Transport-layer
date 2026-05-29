@@ -31,14 +31,14 @@ export default function QuestionOneSimulation() {
     },
     {
       id: 'c',
-      title: "c) After A sends 3,4,5 and B acks 4 (ACK received by A)",
+      title: "c) After A sends 3,4,5 and B sends ACK 4 (ACK received by A)",
       shortTitle: "c) Send 3,4,5 & ACK 4",
-      a_windowStart: 5,
-      a_ackedIndex: 4,
+      a_windowStart: 4,
+      a_ackedIndex: 3,
       a_sentIndex: 5,
-      b_windowStart: 5,
-      b_receivedIndex: 4,
-      explanation: "A sends frames 3, 4, 5 and receives ACK 4 (meaning B has ACKed up to frame 4). A's window slides to [5,6,7,0]. B has ACKed frames up to 4, so B's window also slides to [5,6,7,0]."
+      b_windowStart: 4,
+      b_receivedIndex: 3,
+      explanation: "A sends frames 3, 4, 5. B sends ACK 4, which means it acknowledges receiving up to frame 3 and expects frame 4. A's window slides to [4,5,6,7]. Frames 4 and 5 remain unacknowledged (in-flight). B's window is also at [4,5,6,7] waiting for frame 4."
     }
   ];
 

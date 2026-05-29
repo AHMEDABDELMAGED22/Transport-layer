@@ -192,7 +192,7 @@ export default function QuestionTwoSimulation() {
             <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.5rem', background: 'rgba(239, 68, 68, 0.1)', padding: '1rem', borderRadius: '8px', borderLeft: '4px solid var(--color-red)' }}>
               <AlertTriangle color="var(--color-red)" />
               <div>
-                <strong>Final Answer:</strong> The new complete transfer time is 82 + 24 = <strong>106 µs</strong>.
+                <strong>Final Answer:</strong> The new complete transfer time is 82 + 22 = <strong>104 µs</strong>.
               </div>
             </div>
           </div>

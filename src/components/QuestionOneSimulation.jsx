@@ -31,14 +31,14 @@ export default function QuestionOneSimulation() {
     },
     {
       id: 'c',
-      title: "c) After A sends 3,4,5 and B sends ACK 4 (ACK received by A)",
+      title: "c) After A sends 3,4,5 and B acks 4 (ACK received by A)",
       shortTitle: "c) Send 3,4,5 & ACK 4",
-      a_windowStart: 4,
-      a_ackedIndex: 3,
+      a_windowStart: 5,
+      a_ackedIndex: 4,
       a_sentIndex: 5,
-      b_windowStart: 4,
-      b_receivedIndex: 3,
-      explanation: "A sends frames 3, 4, 5. B sends ACK 4, which means it acknowledges receiving up to frame 3 and expects frame 4. A's window slides to [4,5,6,7]. Frames 4 and 5 remain unacknowledged (in-flight). B's window is also at [4,5,6,7] waiting for frame 4."
+      b_windowStart: 5,
+      b_receivedIndex: 4,
+      explanation: "A sends frames 3, 4, 5 and receives ACK 4 (meaning B has ACKed up to frame 4). A's window slides to [5,6,7,0]. B has ACKed frames up to 4, so B's window also slides to [5,6,7,0]."
     }
   ];
 
@@ -65,10 +65,10 @@ export default function QuestionOneSimulation() {
           {seqList.map((seq, idx) => {
             let state = 'future';
             if (isSender) {
-               if (idx <= lastAckedOrReceived) state = 'acked';
-               else if (idx <= lastSent) state = 'inflight';
+              if (idx <= lastAckedOrReceived) state = 'acked';
+              else if (idx <= lastSent) state = 'inflight';
             } else {
-               if (idx <= lastAckedOrReceived) state = 'received';
+              if (idx <= lastAckedOrReceived) state = 'received';
             }
 
             return (
@@ -77,8 +77,8 @@ export default function QuestionOneSimulation() {
                 border: '1px solid var(--border-color)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontWeight: 'bold', fontFamily: 'var(--font-mono)', fontSize: '0.9rem',
-                background: (state === 'acked' || state === 'received') ? 'var(--bg-color-tertiary)' : 
-                            (state === 'inflight') ? 'rgba(249, 115, 22, 0.2)' : 'var(--bg-color-primary)',
+                background: (state === 'acked' || state === 'received') ? 'var(--bg-color-tertiary)' :
+                  (state === 'inflight') ? 'rgba(249, 115, 22, 0.2)' : 'var(--bg-color-primary)',
                 borderStyle: state === 'inflight' ? 'dashed' : 'solid',
                 borderColor: state === 'inflight' ? 'var(--color-orange)' : 'var(--border-color)',
                 color: (state === 'acked' || state === 'received') ? 'var(--text-secondary)' : 'var(--text-primary)',
@@ -96,10 +96,10 @@ export default function QuestionOneSimulation() {
 
   return (
     <div style={{ marginTop: '1rem', width: '100%' }}>
-      
+
       <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
         {steps.map((s, i) => (
-          <button 
+          <button
             key={i}
             className={step === i ? "btn-primary" : "btn-secondary"}
             onClick={() => setStep(i)}
@@ -111,7 +111,7 @@ export default function QuestionOneSimulation() {
       </div>
 
       <div style={{ background: 'var(--bg-color-secondary)', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)' }}>
-        
+
         <h3 style={{ color: 'white', marginBottom: '1.5rem', fontSize: '1.1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
           {currentStep.title}
         </h3>
@@ -138,12 +138,12 @@ export default function QuestionOneSimulation() {
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><div style={{ width: '12px', height: '12px', background: 'rgba(139, 92, 246, 0.15)', border: '2px solid var(--color-purple)' }}></div> Current Window [ {seqList.slice(currentStep.b_windowStart, currentStep.b_windowStart + 4).join(', ')} ]</span>
           </div>
         </div>
-        
+
         <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(34, 197, 94, 0.1)', borderLeft: '4px solid var(--color-green)', borderRadius: '0 8px 8px 0', animation: 'fadeIn 0.5s ease-in' }} key={step}>
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
             <CheckCircle color="var(--color-green)" size={20} style={{ flexShrink: 0, marginTop: '2px' }} />
             <div>
-              <strong style={{ color: 'var(--color-green)', display: 'block', marginBottom: '0.25rem' }}>Correct Answer Breakdown:</strong> 
+              <strong style={{ color: 'var(--color-green)', display: 'block', marginBottom: '0.25rem' }}>Correct Answer Breakdown:</strong>
               <span style={{ color: 'var(--text-primary)', lineHeight: '1.5' }}>{currentStep.explanation}</span>
             </div>
           </div>
